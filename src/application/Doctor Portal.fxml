@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="980.0" style="-fx-border-color: Blue; -fx-border-width: 5; -fx-background-color: White;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <AnchorPane prefHeight="720.0" prefWidth="992.0">
+         <children>
+            <Button fx:id="editUser" layoutX="45.0" layoutY="141.0" mnemonicParsing="false" onAction="#toViewPatients" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../../../Pictures/Class%20work/CSE360/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="results" layoutX="375.0" layoutY="141.0" mnemonicParsing="false" onAction="#toCheckVitals" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../../../Pictures/Class%20work/CSE360/DNA%20Strand.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="prescriptions" layoutX="695.0" layoutY="141.0" mnemonicParsing="false" onAction="#toSendPrescriptions" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../../../../Pictures/Class%20work/CSE360/prescriptions.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="message" layoutX="45.0" layoutY="431.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../Patient.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="signout" layoutX="695.0" layoutY="431.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../signout.png" />
+                     </image>
+                     <effect>
+                        <Blend />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="14.0" layoutY="14.0" text="Doctor Portal">
+               <font>
+                  <Font name="Times New Roman Bold" size="52.0" />
+               </font>
+            </Label>
+            <Separator layoutX="14.0" layoutY="88.0" prefHeight="3.0" prefWidth="980.0" style="-fx-background-color: Black;" />
+            <ImageView fitHeight="70.0" fitWidth="163.0" layoutX="789.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../toplogo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="89.0" layoutY="349.0" text="Check Patients">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="430.0" layoutY="349.0" text="Check Vitals">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="722.0" layoutY="349.0" text="Send Prescriptions">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="81.0" layoutY="639.0" text="Message Patient">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="765.0" layoutY="639.0" text="Sign Out">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="message1" layoutX="376.0" layoutY="431.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../mail.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="456.0" layoutY="639.0" text="Emails">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
