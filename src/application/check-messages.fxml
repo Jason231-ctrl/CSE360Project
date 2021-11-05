@@ -67,4 +67,7 @@
             </TableView>
         </GridPane>
     </center>
+   <bottom>
+      <Button fx:id="newMessage" mnemonicParsing="false" onAction="#newMessage" text="New Message" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>

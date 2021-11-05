@@ -57,6 +57,20 @@ public class CheckMessages {
         Stage window = (Stage) Table.getScene().getWindow();
         window.setScene(newScene);
     }
+    
+    @FXML
+    private void newMessage() throws IOException {
+    	try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("New-Message.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     protected void hover(MouseEvent event) {

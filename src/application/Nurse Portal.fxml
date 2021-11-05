@@ -17,7 +17,7 @@
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
-                        <Image url="@../../../../Pictures/Class%20work/CSE360/user.png" />
+                        <Image url="@../user.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
