@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="980.0" style="-fx-border-color: Blue; -fx-border-width: 5; -fx-background-color: White;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <AnchorPane prefHeight="720.0" prefWidth="992.0">
+         <children>
+            <Button fx:id="editUser" layoutX="45.0" layoutY="141.0" mnemonicParsing="false" onAction="#toEditUser" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../user.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="results" layoutX="375.0" layoutY="141.0" mnemonicParsing="false" onAction="#toResults" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../DNA%20Strand.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="prescriptions" layoutX="695.0" layoutY="141.0" mnemonicParsing="false" onAction="#toPrescriptions" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../prescriptions.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="message" layoutX="197.0" layoutY="431.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../doctorNurse.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="signout" layoutX="538.0" layoutY="431.0" mnemonicParsing="false" onAction="#signOut" prefHeight="25.0" prefWidth="60.0">
+               <graphic>
+                  <ImageView fitHeight="200.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@../signout.png" />
+                     </image>
+                     <effect>
+                        <Blend />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="14.0" layoutY="14.0" text="Patient Portal">
+               <font>
+                  <Font name="Times New Roman Bold" size="52.0" />
+               </font>
+            </Label>
+            <Separator layoutX="14.0" layoutY="88.0" prefHeight="3.0" prefWidth="980.0" style="-fx-background-color: Black;" />
+            <ImageView fitHeight="75.0" fitWidth="163.0" layoutX="789.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../toplogo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="114.0" layoutY="349.0" text="Edit User">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="422.0" layoutY="349.0" text="Check Results">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="723.0" layoutY="349.0" text="View Prescriptions">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="203.0" layoutY="639.0" text="Message Doctor/Nurse">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="607.0" layoutY="639.0" text="Sign Out">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
