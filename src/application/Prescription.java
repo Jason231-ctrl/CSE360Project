@@ -6,15 +6,25 @@ public class Prescription {
     private final SimpleStringProperty name = new SimpleStringProperty("");
     private final SimpleStringProperty description = new SimpleStringProperty("");
     private final SimpleStringProperty type = new SimpleStringProperty("");
+    private float dose = 0;
 
     public Prescription() {
-        this("", "", "");
+        this("", "", "", 0);
     }
 
-    public Prescription(String name, String description, String type) {
+    public Prescription(String name, String description, String type, float dose) {
         setName(name);
         setDescription(description);
         setType(type);
+        this.dose = dose;
+    }
+
+    public Prescription(String allInOne) {
+        String[] split = allInOne.split(",");
+        setName(split[0]);
+        setDescription(split[1]);
+        setType(split[2]);
+        setDose(Integer.parseInt(split[3]));
     }
 
     public String getName() {
@@ -40,4 +50,8 @@ public class Prescription {
     public void setType(String newType) {
         type.set(newType);
     }
+
+    public float getDose() { return dose; }
+
+    public void setDose(float newDose) { dose = newDose; }
 }

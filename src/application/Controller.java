@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import java.sql.Connection;
@@ -53,17 +55,31 @@ public class Controller implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		prescChoiceBox.getItems().addAll(placeholderNames);
-		prescChoiceBox.setOnAction(this::getName);
+		//Start Prescription
 		prescListView.getItems().addAll(placeholderPresc);
+
+		SQLiteDataSource ds = null;
+		ResultSet result = null;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+		try {
+			Connection conn = ds.getConnection();
+			Statement stmt = conn.createStatement();
+			result = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
+
+			ArrayList<String> presAllPatientNames = new ArrayList<String>();
+			while(result.next()) {
+				String presFullName = result.getString("First_name") + " " + result.getString("Last_name");
+				presAllPatientNames.add(presFullName);
+			}
+
+			prescChoiceBox.getItems().addAll(presAllPatientNames);
+		} catch (SQLException e) {
+			//e.printStackTrace();
+		}
+		//End Prescription
 	}
-	
-	public void getName(ActionEvent event) {
-		String name = prescChoiceBox.getValue();
-		prescNameLabel.setText(name);
-	}
-	
-	
+
 	public void toEditUser(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("EditUser.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -106,12 +122,15 @@ public class Controller implements Initializable{
 		}
 		if (type == 0) {
 			portal = "Patient Portal.fxml";
+			Main.user.setAll("Patient", username.getText());
 		}
 		else if (type == 1) {
 			portal = "Nurse Portal.fxml";
+			Main.user.setAll("Nurse", username.getText());
 		}
 		else if (type == 2) {
 			portal = "Doctor Portal.fxml";
+			Main.user.setAll("Doctor", username.getText());
 		}
 		else {
 			portal = "Main.fxml";
@@ -156,13 +175,21 @@ public class Controller implements Initializable{
 		stage.show();
 	}
 	
-	/*public void toDoctorPortal(ActionEvent event) throws IOException {
+	public void toDoctorPortal(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("Doctor Portal.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-	}*/
+	}
+
+	public void toPatientPortal(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("Patient Portal.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	
 	public void toViewPatients(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("ViewPatients.fxml"));
@@ -188,13 +215,13 @@ public class Controller implements Initializable{
 		stage.show();
 	}
 	
-	/*public void toNursePortal(ActionEvent event) throws IOException {
+	public void toNursePortal(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("Nurse Portal.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-	} */
+	}
 	
 	public void toTakeVitals(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("TakeVitals.fxml"));
@@ -220,7 +247,20 @@ public class Controller implements Initializable{
 		stage.show();
 	}
 	
-	
-	
+	public void hover(MouseEvent event) {
+		Button hoveredButton = (Button)event.getSource();
+		hoveredButton.setStyle("""
+                -fx-background-radius: 0;
+                -fx-border: none;
+                -fx-background-color: #bfbfbf;""");
+	}
+
+	public void unHover(MouseEvent event) {
+		Button hoveredButton = (Button)event.getSource();
+		hoveredButton.setStyle("""
+                -fx-background-radius: 0;
+                -fx-border: none;
+                -fx-background-color: none;""");
+	}
 }
  
