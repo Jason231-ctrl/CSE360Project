@@ -108,6 +108,12 @@ public class Main extends Application {
         		"Name TEXT NOT NULL PRIMARY KEY, " +
         		"Desc TEXT NOT NULL)";
         
+        String accountDb = "CREATE TABLE IF NOT EXISTS AccountDb ( " +
+        		"Username TEXT NOT NULL PRIMARY KEY, " +
+        		"Password TEXT NOT NULL, " +
+        		// 0 - Patient, 1 - Nurse, 2 - Doctor
+        		"Type TEXT NOT NULL)";
+        
         try (Connection conn = ds.getConnection()) {
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(createNurse);
@@ -115,6 +121,7 @@ public class Main extends Application {
 			stmt.executeUpdate(createPatient);
 			stmt.executeUpdate(createResult);
 			stmt.executeUpdate(drugDB);
+			stmt.executeUpdate(accountDb);
 			
 			/* testing if it works:
 			 *  use .executeUpdate() for CREATE, INSERT, DELETE, or UPDATE statement.
@@ -128,15 +135,21 @@ public class Main extends Application {
 	
 	public static void insertPatient(String first, String last, String username, String password,
 			String dob, int doctor, String nurse, String address, String email, String prescription, int phone, int id) {
+		
 		String query = "INSERT INTO PatientInfoDb(First_name,Last_name,Username,Password,Dob,DoctorID,Nurse,Address,Email_add,Perscriptions,Phone_num,Id) "
 				+ "VALUES('" + first + "','" + last + "','" + username + "','" + password + "','" + dob + "',"
 				 + doctor + ",'" + nurse + "','" + address + "','" + email + "','" + prescription + "'," + phone + "," + id + ")";
+		
+		String query1 = "INSERT INTO AccountDb(Username,Password,Type) "
+				+ "VALUES('" + username + "','" + password + "'," + 0 + ")";
+		
 		SQLiteDataSource ds = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
 		 try (Connection conn = ds.getConnection()) {
 				Statement stmt = conn.createStatement();
 				stmt.executeUpdate(query);
+				stmt.executeUpdate(query1);
 		 } catch ( SQLException e) {
 			 e.printStackTrace();
 		 }
