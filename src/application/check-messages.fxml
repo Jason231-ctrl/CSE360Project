@@ -51,11 +51,6 @@
                 <columnResizePolicy>
                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                 </columnResizePolicy>
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <Conversation lastMessage="Thanks Doc!" with="Dr. House" />
-                    </FXCollections>
-                </items>
                 <columns>
                     <TableColumn text="With">
                         <cellValueFactory><PropertyValueFactory property="with" /></cellValueFactory>
