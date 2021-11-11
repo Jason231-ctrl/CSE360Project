@@ -17,7 +17,8 @@ import org.sqlite.SQLiteDataSource;
 
 
 public class Main extends Application {
-	
+	public static User user = new User();
+
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		try {
