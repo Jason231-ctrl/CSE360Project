@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-border-color: Black; -fx-background-color: White;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <Label layoutX="120.0" layoutY="16.0" text="Patients">
+         <font>
+            <Font name="Times New Roman Bold" size="52.0" />
+         </font>
+      </Label>
+      <Separator layoutY="75.0" prefHeight="0.0" prefWidth="980.0" style="-fx-background-color: Black;" />
+      <Label layoutX="29.0" layoutY="140.0" text="John Freeman">
+         <font>
+            <Font name="Times New Roman" size="32.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="70.0" fitWidth="163.0" layoutX="789.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../toplogo.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="59.0" layoutX="19.0" layoutY="129.0" opacity="0.21" stroke="BLACK" strokeType="INSIDE" width="945.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="59.0" layoutX="19.0" layoutY="198.0" opacity="0.21" stroke="BLACK" strokeType="INSIDE" width="945.0" />
+      <Label layoutX="29.0" layoutY="209.0" text="Pete Williams">
+         <font>
+            <Font name="Times New Roman" size="32.0" />
+         </font>
+      </Label>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="885.0" layoutY="200.0" mnemonicParsing="false" text="Button">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../prescriptions.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="805.0" layoutY="200.0" mnemonicParsing="false" onAction="#toCheckVitals" text="Button">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../DNA%20Strand.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="724.0" layoutY="200.0" mnemonicParsing="false" text="Button">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Patient.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="724.0" layoutY="131.0" mnemonicParsing="false" text="Button">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Patient.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="805.0" layoutY="131.0" mnemonicParsing="false" onAction="#toCheckVitals" text="Button">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../DNA%20Strand.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="885.0" layoutY="131.0" mnemonicParsing="false" text="Button">
+         <graphic>
+            <ImageView fitHeight="51.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../prescriptions.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button contentDisplay="GRAPHIC_ONLY" layoutX="29.0" layoutY="18.0" mnemonicParsing="false" onAction="#toDoctorPortal" text="Button">
+         <graphic>
+            <ImageView fitHeight="55.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../arrow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

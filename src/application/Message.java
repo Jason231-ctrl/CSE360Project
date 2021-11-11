@@ -5,16 +5,14 @@ import javafx.beans.property.SimpleStringProperty;
 public class Message {
     private final SimpleStringProperty message = new SimpleStringProperty("");
     private final SimpleStringProperty from = new SimpleStringProperty("");
-    private final SimpleStringProperty time = new SimpleStringProperty("");
 
     public Message() {
-        this("", "", "");
+        this("", "");
     }
 
-    public Message(String message, String from, String time) {
+    public Message(String from, String message) {
         setMessage(message);
         setFrom(from);
-        setTime(time);
     }
 
     public void setMessage(String newMessage) {
@@ -31,13 +29,5 @@ public class Message {
 
     public String getFrom() {
         return from.get();
-    }
-
-    public void setTime(String newTime) {
-        time.set(newTime);
-    }
-
-    public String getTime() {
-        return time.get();
     }
 }

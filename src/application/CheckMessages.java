@@ -1,13 +1,17 @@
 package application;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -21,13 +25,24 @@ import java.util.List;
 import java.util.Objects;
 
 public class CheckMessages {
+	
     @FXML
     private TableView<Conversation> Table;
+    
+    @FXML
+    private TableColumn<Conversation, String> with;
+    
+    @FXML
+    private TableColumn<Conversation, String> message;
+    
+    @FXML
+    private Button newMessage;
 
-    private ArrayList<Conversation> conversations = new ArrayList<Conversation>(java.util.List.of(new Conversation("Dr. House", "Thanks Doc!"))); //Replace this later with getting the conversations from a DB
-
+    private ArrayList<Conversation> conversations = new ArrayList<Conversation>();
+   
+        
     public void initialize() {
-        Table.setRowFactory(tableView -> {
+    	Table.setRowFactory(tableView -> {
             TableRow<Conversation> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if(event.getClickCount() == 2 && (!row.isEmpty())) {
@@ -50,6 +65,7 @@ public class CheckMessages {
             return row;
         });
     }
+    
 
     @FXML
     private void back() throws IOException {
@@ -61,12 +77,14 @@ public class CheckMessages {
     @FXML
     private void newMessage() throws IOException {
     	try {
+    		Stage stage1 = (Stage) newMessage.getScene().getWindow();
+    		stage1.close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("New-Message.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
+            Stage stage2 = new Stage();
+            stage2.setResizable(false);
+            stage2.setScene(scene);
+            stage2.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
