@@ -39,15 +39,7 @@ public class CreateAccountController {
 
     @FXML
     protected void createAccount() throws IOException {
-        String scene;
-        if(DoctorNurseBox.isSelected())  {
-            if(Integer.parseInt(IDInput.getText()) > 500) { //Doctor Id Match, change this later to search DB
-                scene = "Doctor Portal.fxml";
-            } else { //Nurse Id Match
-                scene = "Nurse Portal.fxml";
-            }
-        } else scene = "Patient Portal.fxml";
-
+        String scene = "Patient Portal.fxml";
         Scene newScene = new Scene(FXMLLoader.load(getClass().getResource(scene)), 1000, 1000);
         Stage window = (Stage) Username.getScene().getWindow();
         window.setScene(newScene);
