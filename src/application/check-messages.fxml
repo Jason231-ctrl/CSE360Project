@@ -53,7 +53,7 @@
                 </columnResizePolicy>
                 <items>
                     <FXCollections fx:factory="observableArrayList">
-                        <Conversation lastMessage="Thanks Door!" with="Dr. Hourse" />
+                        <Conversation lastMessage="Thanks Doc!" with="Dr. House" />
                     </FXCollections>
                 </items>
                 <columns>

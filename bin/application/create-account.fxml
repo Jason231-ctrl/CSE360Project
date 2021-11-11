@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="application.CreateAccountController"
+            prefHeight="300.0" prefWidth="500.0">
+    <BorderPane prefHeight="300.0" prefWidth="500.0">
+        <top>
+            <Label BorderPane.alignment="CENTER" text="Create an Account">
+                <font>
+                    <Font name="System Bold" size="30" />
+                </font>
+            </Label>
+        </top>
+        <center>
+            <HBox BorderPane.alignment="CENTER" spacing="20" style="-fx-padding: 30 40 0 40">
+                <VBox spacing="10">
+                    <TextField fx:id="Username" prefWidth="190" promptText="Username"/>
+                    <TextField fx:id="Password" prefWidth="190" promptText="Password"/>
+                </VBox>
+                <VBox spacing="10">
+                    <TextField fx:id="FirstName" prefWidth="190" promptText="First Name" />
+                    <TextField fx:id="LastName" prefWidth="190" promptText="Last Name" />
+                    <TextField fx:id="DoB" prefWidth="190" promptText="Date of Birth(mm/dd/yyyy)" />
+                </VBox>
+            </HBox>
+        </center>
+        <bottom>
+            <HBox BorderPane.alignment="CENTER" spacing="70" style="-fx-padding: 0 65 30 65">
+                <Button prefWidth="140" text="Cancel" onAction="#cancelCreation" onMouseEntered="#hover" onMouseExited="#unHover" style="
+                    -fx-background-color: #78c4ff;
+                    -fx-text-fill: white;
+                    -fx-font-weight: bolder;
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 10;
+                "/>
+                <Button prefWidth="140" text="Create Account" onAction="#createAccount" onMouseEntered="#hover" onMouseExited="#unHover" style="
+                    -fx-background-color: #78c4ff;
+                    -fx-text-fill: white;
+                    -fx-font-weight: bolder;
+                    -fx-font-size: 14px;
+                    -fx-background-radius: 10;
+                "/>
+            </HBox>
+        </bottom>
+    </BorderPane>
+
+</AnchorPane>

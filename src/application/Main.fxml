@@ -23,7 +23,7 @@
                   <Image url="@../medical%20symbol.png" />
                </image>
             </ImageView>
-            <Hyperlink layoutX="14.0" layoutY="321.0" text="Create Account" underline="true">
+            <Hyperlink layoutX="14.0" layoutY="321.0" text="Create Account" underline="true" onAction="#toCreateAccount">
                <font>
                   <Font size="10.0" />
                </font>

@@ -153,7 +153,13 @@ public class Controller implements Initializable{
 		stage.show();
 	}
 	
-	
+	public void toCreateAccount(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("create-account.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	
 	
 	

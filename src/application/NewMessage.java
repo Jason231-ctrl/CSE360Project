@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -40,7 +38,7 @@ public class NewMessage {
 	
 	public void getName(ActionEvent event) {
 		String name = docNurseDropdown.getValue();
-		toTextLabel.setText(name);
+		toTextLabel.setText("To: " + name);
 	}
 	
 	public void sendMessage() {
@@ -53,17 +51,10 @@ public class NewMessage {
 			message = toTextLabel.getText() + "\n" + messageTextArea.getText() + "\n";
 			writer.write(message);
 			writer.close();
-			
-			Stage stage1 = (Stage) sendMessageButton.getScene().getWindow();
-    		stage1.close();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Patient Portal.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage2 = new Stage();
-            stage2.setResizable(false);
-            stage2.setScene(scene);
-            stage2.show();
 		} catch (IOException e) {
 			System.out.println("ERROR!");
 		}
+		Stage stage = (Stage) sendMessageButton.getScene().getWindow();
+		stage.close();
 	}
 }
