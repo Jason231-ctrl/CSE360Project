@@ -22,3 +22,34 @@
 .idea/vcs.xml
 CSE360Project.iml
 pom.xml
+target/classes/user.png
+target/classes/toplogo.png
+target/classes/signout.png
+target/classes/prescriptions.jpg
+target/classes/Patient.png
+target/classes/needle.png
+target/classes/medical symbol.png
+target/classes/mail.png
+target/classes/info.db
+target/classes/doctorNurse.jpg
+target/classes/DNA Strand.jpg
+target/classes/arrow.png
+target/classes/application/ViewPatients.fxml
+target/classes/application/TakeVitals.fxml
+target/classes/application/SendPrescriptions.fxml
+target/classes/application/Results.fxml
+target/classes/application/Prescriptions.fxml
+target/classes/application/Patient Portal.fxml
+target/classes/application/NursePatients.fxml
+target/classes/application/Nurse Portal.fxml
+target/classes/application/New-Message.fxml
+target/classes/application/messaging.fxml
+target/classes/application/Main.fxml
+target/classes/application/EditUser.fxml
+target/classes/application/Doctor Portal.fxml
+target/classes/application/create-account.fxml
+target/classes/application/CheckVitals.fxml
+target/classes/application/check-messages.fxml
+target/classes/application/application.css
+target/classes/.project
+target/classes/.classpath
