@@ -155,4 +155,17 @@ public class Main extends Application {
 		 }
 		
 	}
+	
+	public static void addPrescriptions(String newPrescriptionString, int id) {
+		String newDrug = "UPDATE PatientInfoDb SET Perscriptions = '" + newPrescriptionString + "' WHERE Id = " + id;
+		SQLiteDataSource ds = null;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+		 try (Connection conn = ds.getConnection()) {
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(newDrug);
+		 } catch ( SQLException e) {
+			 e.printStackTrace();
+		 }
+	}
 }

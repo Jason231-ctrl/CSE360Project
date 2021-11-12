@@ -35,12 +35,12 @@
       <TextField layoutX="384.0" layoutY="144.0" promptText="123-456-7890" />
       <TextField layoutX="384.0" layoutY="264.0" promptText="123 E Address St." />
       <TextField layoutX="384.0" layoutY="366.0" promptText="user@email.com" />
-      <Button layoutX="210.0" layoutY="516.0" mnemonicParsing="false" onAction="#toPatientPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Cancel" textAlignment="CENTER" textFill="WHITE">
+      <Button layoutX="210.0" layoutY="516.0" mnemonicParsing="false" onAction="#toPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Cancel" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Times New Roman" size="32.0" />
          </font>
       </Button>
-      <Button layoutX="490.0" layoutY="516.0" mnemonicParsing="false" onAction="#toPatientPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Save Changes" textAlignment="CENTER" textFill="WHITE">
+      <Button layoutX="490.0" layoutY="516.0" mnemonicParsing="false" onAction="#toPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Save Changes" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Times New Roman" size="32.0" />
          </font>
