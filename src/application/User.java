@@ -29,6 +29,18 @@ public class User {
     }
 
     public void setAll(String type, String username) {
+        this.type = "";
+        firstName = "";
+        lastName = "";
+        dob = "";
+        address = "";
+        phoneNumber = "";
+        email = "";
+        doctorID = 0;
+        id = 0;
+        nurseID = new ArrayList<Integer>();
+        prescriptions = new ArrayList<Prescription>();
+
         setType(type);
 
         SQLiteDataSource ds = null;
