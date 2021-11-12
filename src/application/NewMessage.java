@@ -64,8 +64,8 @@ public class NewMessage {
 		SQLiteDataSource ds = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
-		 try (Connection conn = ds.getConnection()) {
-				Statement stmt = conn.createStatement();
+		 try (Connection conn = ds.getConnection();
+				Statement stmt = conn.createStatement();) {
 				stmt.executeUpdate(query);
 		 } catch ( SQLException e) {
 			 e.printStackTrace();

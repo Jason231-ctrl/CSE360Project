@@ -59,9 +59,8 @@ public class Controller implements Initializable{
 		ResultSet drugsresult = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
-		try {
-			Connection conn = ds.getConnection();
-			Statement stmt = conn.createStatement();
+		try(Connection conn = ds.getConnection();
+			Statement stmt = conn.createStatement();) {
 			namesresult = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
 
 			ArrayList<String> presAllPatientNames = new ArrayList<String>();
@@ -100,6 +99,8 @@ public class Controller implements Initializable{
 		String selectedPatient = prescChoiceBox.getValue();
 		String selectedDrug = prescListView.getSelectionModel().getSelectedItem();
 		String currentDose = prescDose.getText();
+		String newPrescriptionsString = null;
+		int id = 0;
 
 		if(selectedPatient == null || selectedDrug == null || currentDose == null || selectedPatient.compareTo("") == 0 || selectedDrug.compareTo("") == 0 || currentDose.compareTo("") == 0) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -114,11 +115,10 @@ public class Controller implements Initializable{
 			ResultSet drugresult = null;
 			ds = new SQLiteDataSource();
 			ds.setUrl("jdbc:sqlite:info.db");
-			try {
-				Connection conn = ds.getConnection();
-				Statement stmt = conn.createStatement();
+			try(Connection conn = ds.getConnection();
+				Statement stmt = conn.createStatement();) {
 				patientresult = stmt.executeQuery("SELECT Perscriptions, Id FROM PatientInfoDb WHERE First_name = '" + selectedPatient.split(" ")[0] + "' AND Last_name = '" + selectedPatient.split(" ")[1] + "'");
-				int id = patientresult.getInt("Id");
+				id = patientresult.getInt("Id");
 
 				String[] prescriptionsString = patientresult.getString("Perscriptions") == null ? new String[]{}:patientresult.getString("Perscriptions").split("|");
 				ArrayList<Prescription> prescriptions = new ArrayList<Prescription>();
@@ -138,11 +138,11 @@ public class Controller implements Initializable{
 				}
 				drugresult.close();
 
-				String newPrescriptionsString = String.join("|", prescriptionsStringified);
+				newPrescriptionsString = String.join("|", prescriptionsStringified);
 
-				stmt.executeUpdate("UPDATE PatientInfoDb SET \"Perscriptions\" = '" + newPrescriptionsString + "' WHERE \"Id\" = " + id);
+				stmt.executeUpdate("UPDATE PatientInfoDb SET Perscriptions = '" + newPrescriptionsString + "' WHERE Id = " + id);
 			} catch (SQLException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 
 			root = FXMLLoader.load(getClass().getResource("Doctor Portal.fxml"));
@@ -182,6 +182,7 @@ public class Controller implements Initializable{
 			  Statement stmt = conn.createStatement(); ) {
 		result = stmt.executeQuery("SELECT Type FROM AccountDb WHERE Username = '" + username.getText() + "' AND Password = '" + password.getText() + "'");
 		type = result.getInt( "Type" );
+		conn.close();
 		} catch (SQLException e) {
 			//e.printStackTrace();
 		}

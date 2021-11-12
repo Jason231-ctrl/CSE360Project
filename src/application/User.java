@@ -47,10 +47,8 @@ public class User {
         ResultSet result = null;
         ds = new SQLiteDataSource();
         ds.setUrl("jdbc:sqlite:info.db");
-        try {
-            Connection conn = ds.getConnection();
-            Statement stmt = conn.createStatement();
-
+        try(Connection conn = ds.getConnection();
+            Statement stmt = conn.createStatement();) {
 
             setType(type);
             if(type.compareTo("Patient") == 0) {
@@ -66,9 +64,15 @@ public class User {
                     nurseID.add(Integer.parseInt(s));
                 }
 
-                String[] prescriptionStringArr = result.getString("Perscriptions").split("|");
-                for (String s : prescriptionStringArr) {
-                    prescriptions.add(new Prescription(s));
+                if(result.getString("Perscriptions") != null) {
+                    String[] prescriptionStringArr = result.getString("Perscriptions").split("|");
+                    if(result.getString("Perscriptions").split("|").length == 1) {
+                        prescriptions.add(new Prescription(result.getString("Perscriptions")));
+                    } else {
+                        for (String s : prescriptionStringArr) {
+                            prescriptions.add(new Prescription(s));
+                        }
+                    }
                 }
 
             } else if(type.compareTo("Nurse") == 0) {

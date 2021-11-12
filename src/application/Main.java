@@ -116,12 +116,12 @@ public class Main extends Application {
         		"Type TEXT NOT NULL)";
         
         String CreateMessagingDB = "CREATE TABLE IF NOT EXISTS MessagesDB (" +
-				"Sender TEXT NOT NULL, " + 
-				"Receiver TEXT NOT NULL, " + 
+				"Sender TEXT NOT NULL, " +
+				"Receiver TEXT NOT NULL, " +
 				"Messages TEXT NOT NULL)";
         
-        try (Connection conn = ds.getConnection()) {
-			Statement stmt = conn.createStatement();
+        try (Connection conn = ds.getConnection();
+			Statement stmt = conn.createStatement();) {
 			stmt.executeUpdate(createNurse);
 			stmt.executeUpdate(createDoctor);
 			stmt.executeUpdate(createPatient);
@@ -129,7 +129,6 @@ public class Main extends Application {
 			stmt.executeUpdate(drugDB);
 			stmt.executeUpdate(accountDb);
 			stmt.executeUpdate(CreateMessagingDB);
-			
 			/* testing if it works:
 			 *  use .executeUpdate() for CREATE, INSERT, DELETE, or UPDATE statement.
 			 *  use .executeQuery() for SELECT
@@ -149,28 +148,14 @@ public class Main extends Application {
 		
 		String query1 = "INSERT INTO AccountDb(Username,Password,Type) "
 				+ "VALUES('" + username + "','" + password + "'," + 0 + ")";
-		
+
 		SQLiteDataSource ds = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
-		 try (Connection conn = ds.getConnection()) {
-				Statement stmt = conn.createStatement();
+		 try (Connection conn = ds.getConnection();
+				Statement stmt = conn.createStatement();) {
 				stmt.executeUpdate(query);
 				stmt.executeUpdate(query1);
-		 } catch ( SQLException e) {
-			 e.printStackTrace();
-		 }
-		
-	}
-	
-	public static void addPrescriptions(String newPrescriptionString, int id) {
-		String newDrug = "UPDATE PatientInfoDb SET Perscriptions = '" + newPrescriptionString + "' WHERE Id = " + id;
-		SQLiteDataSource ds = null;
-		ds = new SQLiteDataSource();
-		ds.setUrl("jdbc:sqlite:info.db");
-		 try (Connection conn = ds.getConnection()) {
-				Statement stmt = conn.createStatement();
-				stmt.executeUpdate(newDrug);
 		 } catch ( SQLException e) {
 			 e.printStackTrace();
 		 }
