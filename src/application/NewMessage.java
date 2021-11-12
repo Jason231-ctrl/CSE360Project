@@ -2,6 +2,11 @@ package application;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.sqlite.SQLiteDataSource;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,24 +42,33 @@ public class NewMessage {
 	}
 	
 	public void getName(ActionEvent event) {
-		String name = docNurseDropdown.getValue();
-		toTextLabel.setText("To: " + name);
+		toText = docNurseDropdown.getValue();
+		toTextLabel.setText("To: " + toText);
 	}
 	
 	public void sendMessage() {
-		File log = new File("Messages.txt");
-		try {
-			if(!log.exists()) {
-				log.createNewFile();
-			}
-			FileWriter writer = new FileWriter(log, true);
-			message = toTextLabel.getText() + "\n" + messageTextArea.getText() + "\n";
-			writer.write(message);
-			writer.close();
-		} catch (IOException e) {
-			System.out.println("ERROR!");
+		message = messageTextArea.getText() + "\n";
+		if (message == "" || toText == null) {
+			Stage stage = (Stage) sendMessageButton.getScene().getWindow();
+			stage.close();
+		} else {
+			insertMessage("User", toText, message);
+			Stage stage = (Stage) sendMessageButton.getScene().getWindow();
+			stage.close();
 		}
-		Stage stage = (Stage) sendMessageButton.getScene().getWindow();
-		stage.close();
+	}
+	
+	public static void insertMessage(String from, String to, String text) {
+		String query = "INSERT INTO MessagesDB(Sender, Receiver, Messages) "
+				+ "VALUES('" + from + "','" + to + "','" + text + "')";
+		SQLiteDataSource ds = null;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+		 try (Connection conn = ds.getConnection()) {
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(query);
+		 } catch ( SQLException e) {
+			 e.printStackTrace();
+		 }	
 	}
 }

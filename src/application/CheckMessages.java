@@ -1,55 +1,60 @@
 package application;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+import org.sqlite.SQLiteDataSource;
 
 import java.io.IOException;
-import java.io.ObjectStreamClass;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class CheckMessages {
     @FXML
     private TableView<Conversation> Table;
 
-    private ArrayList<Conversation> conversations = new ArrayList<Conversation>(java.util.List.of(new Conversation("Dr. House", "Thanks Doc!"))); //Replace this later with getting the conversations from a DB
-
     public void initialize() {
-        Table.setRowFactory(tableView -> {
-            TableRow<Conversation> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if(event.getClickCount() == 2 && (!row.isEmpty())) {
-                    Conversation rowData = row.getItem();
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("messaging.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 400, 600);
-                        Stage stage = new Stage();
-                        stage.setResizable(false);
-                        stage.setTitle("MedGo: Messaging ".concat(rowData.getWith()));
-                        stage.setScene(scene);
-                        Messaging messagingController = fxmlLoader.getController();
-                        messagingController.loadMessages(rowData);
-                        stage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            return row;
-        });
+    	initializeTable();
     }
+    
+    private void initializeTable() {
+    	SQLiteDataSource ds = new SQLiteDataSource();
+    	ds.setUrl("jdbc:sqlite:info.db");
+    	ResultSet rs = null;
+    	PreparedStatement ps = null;
+    	try {
+    	Connection con = ds.getConnection();
+    	String sql = "SELECT Receiver, Messages from MessagesDB where Sender = 'User'";
+    	ps = con.prepareStatement(sql);
+    	rs = ps.executeQuery();
+    	while(rs.next()) {
+    		String sender = rs.getString("Receiver");
+    		String message = rs.getString("Messages");
+    		Table.getItems().add(new Conversation(sender, message));
+    	}
+    	} catch (SQLException e) {
+    		System.out.println(e.toString());
+    	} finally {
+    		try {
+    			rs.close();
+    			ps.close();
+    		} catch(SQLException e) {
+    			System.out.println(e.toString());
+    		}
+    	}
+    	
+    }
+    
 
     @FXML
     private void back() throws IOException {
@@ -90,3 +95,4 @@ public class CheckMessages {
                 -fx-background-color: none;""");
     }
 }
+

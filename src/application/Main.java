@@ -17,7 +17,8 @@ import org.sqlite.SQLiteDataSource;
 
 
 public class Main extends Application {
-	
+	public static User user = new User();
+
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		try {
@@ -114,6 +115,11 @@ public class Main extends Application {
         		// 0 - Patient, 1 - Nurse, 2 - Doctor
         		"Type TEXT NOT NULL)";
         
+        String CreateMessagingDB = "CREATE TABLE IF NOT EXISTS MessagesDB (" +
+				"Sender TEXT NOT NULL, " + 
+				"Receiver TEXT NOT NULL, " + 
+				"Messages TEXT NOT NULL)";
+        
         try (Connection conn = ds.getConnection()) {
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(createNurse);
@@ -122,6 +128,7 @@ public class Main extends Application {
 			stmt.executeUpdate(createResult);
 			stmt.executeUpdate(drugDB);
 			stmt.executeUpdate(accountDb);
+			stmt.executeUpdate(CreateMessagingDB);
 			
 			/* testing if it works:
 			 *  use .executeUpdate() for CREATE, INSERT, DELETE, or UPDATE statement.

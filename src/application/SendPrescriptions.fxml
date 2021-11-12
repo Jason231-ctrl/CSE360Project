@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollBar?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-border-color: Black; -fx-background-color: White;">
-         <children>
-            <Label layoutX="125.0" layoutY="14.0" text="Send Prescriptions">
-               <font>
-                  <Font name="Times New Roman Bold" size="52.0" />
-               </font>
-            </Label>
-            <Separator layoutY="75.0" prefHeight="0.0" prefWidth="980.0" style="-fx-background-color: Black;" />
-            <Label layoutX="149.0" layoutY="135.0" text="Patient List" underline="true">
-               <font>
-                  <Font name="Times New Roman Bold" size="32.0" />
-               </font>
-            </Label>
-            <Button layoutX="491.0" layoutY="555.0" mnemonicParsing="false" onAction="#toDoctorPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Submit" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Times New Roman" size="32.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="70.0" fitWidth="163.0" layoutX="789.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../toplogo.png" />
-               </image>
-            </ImageView>
-            <ChoiceBox fx:id="prescChoiceBox" layoutX="154.0" layoutY="193.0" prefWidth="150.0" />
-            <TextField alignment="CENTER" layoutX="403.0" layoutY="135.0" prefHeight="37.0" prefWidth="311.0" promptText="Search Prescriptions" style="-fx-background-radius: 25;" />
-            <ListView fx:id="prescListView" layoutX="403.0" layoutY="172.0" prefHeight="353.0" prefWidth="311.0" />
-            <ScrollBar layoutX="693.0" layoutY="172.0" orientation="VERTICAL" prefHeight="353.0" prefWidth="21.0" />
-            <Button contentDisplay="GRAPHIC_ONLY" layoutX="29.0" layoutY="15.0" mnemonicParsing="false" onAction="#toDoctorPortal" prefHeight="41.0" prefWidth="21.0" text="Button">
-               <graphic>
-                  <ImageView fitHeight="54.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="980.0" style="-fx-border-color: Black; -fx-background-color: White;">
+         <top>
+            <VBox>
+               <HBox alignment="CENTER">
+                  <Button contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#toDoctorPortal" prefHeight="41.0" prefWidth="21.0" text="Button" onMouseEntered="#hover" onMouseExited="#unHover" style="                 -fx-background-radius: 0;                 -fx-border: none;                 -fx-background-color: none;             ">
+                     <graphic>
+                        <ImageView fitHeight="54.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label text="Send Prescriptions                        ">
+                     <font>
+                        <Font name="Times New Roman Bold" size="52.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="70.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../arrow.png" />
+                        <Image url="@../toplogo.png" />
                      </image>
                   </ImageView>
-               </graphic>
-            </Button>
-            <Label fx:id="prescNameLabel" layoutX="164.0" layoutY="335.0" text="Patient Name">
-               <font>
-                  <Font name="Times New Roman" size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+               </HBox>
+               <Separator prefHeight="0.0" prefWidth="980.0" style="-fx-background-color: Black;" />
+            </VBox>
+         </top>
+         <center>
+            <VBox alignment="CENTER" spacing="5.0">
+               <HBox alignment="CENTER" spacing="20.0">
+                  <VBox spacing="10.0">
+                     <Label text="Patient List" underline="true">
+                        <font>
+                           <Font name="Times New Roman Bold" size="32.0" />
+                        </font>
+                     </Label>
+                     <ChoiceBox fx:id="prescChoiceBox" prefWidth="150.0" />
+                  </VBox>
+                  <VBox>
+                     <TextField fx:id="prescDose" promptText="Dosage" />
+                     <ListView fx:id="prescListView" prefHeight="353.0" prefWidth="311.0" />
+                  </VBox>
+               </HBox>
+               <Button mnemonicParsing="false" onAction="#sendPrescription" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Submit" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font name="Times New Roman" size="32.0" />
+                  </font>
+               </Button>
+            </VBox>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>
