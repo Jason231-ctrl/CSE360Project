@@ -48,32 +48,38 @@ public class Controller implements Initializable{
 	
 	@FXML
 	private TextField password;
-	
-	private String[] placeholderNames = {"John Smith", "Pete Williams", "Michael Scott"};
-	String[] placeholderPresc = {"Tylenol", "Chicken Noodle Soup", "Advil"};
+
 	String currentPresc;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//Start Prescription
-		prescListView.getItems().addAll(placeholderPresc);
-
 		SQLiteDataSource ds = null;
-		ResultSet result = null;
+		ResultSet namesresult = null;
+		ResultSet drugsresult = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
 		try {
 			Connection conn = ds.getConnection();
 			Statement stmt = conn.createStatement();
-			result = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
+			namesresult = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
 
 			ArrayList<String> presAllPatientNames = new ArrayList<String>();
-			while(result.next()) {
-				String presFullName = result.getString("First_name") + " " + result.getString("Last_name");
+			while(namesresult.next()) {
+				String presFullName = namesresult.getString("First_name") + " " + namesresult.getString("Last_name");
 				presAllPatientNames.add(presFullName);
 			}
 
+			drugsresult = stmt.executeQuery("SELECT * FROM DrugDb");
+
+			ArrayList<String> presDrugNames = new ArrayList<String>();
+			while(drugsresult.next()) {
+				String presDrugName = drugsresult.getString("Name");
+				presDrugNames.add(presDrugName);
+			}
+
 			prescChoiceBox.getItems().addAll(presAllPatientNames);
+			prescListView.getItems().addAll(presDrugNames);
 		} catch (SQLException e) {
 			//e.printStackTrace();
 		}
