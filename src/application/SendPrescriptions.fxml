@@ -46,11 +46,11 @@
                      <ChoiceBox fx:id="prescChoiceBox" prefWidth="150.0" />
                   </VBox>
                   <VBox>
-                     <TextField alignment="CENTER" prefHeight="37.0" prefWidth="311.0" promptText="Search Prescriptions" />
+                     <TextField fx:id="prescDose" promptText="Dosage" />
                      <ListView fx:id="prescListView" prefHeight="353.0" prefWidth="311.0" />
                   </VBox>
                </HBox>
-               <Button mnemonicParsing="false" onAction="#toDoctorPortal" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Submit" textAlignment="CENTER" textFill="WHITE">
+               <Button mnemonicParsing="false" onAction="#sendPrescription" style="-fx-background-color: CYAN; -fx-background-radius: 50;" text="Submit" textAlignment="CENTER" textFill="WHITE">
                   <font>
                      <Font name="Times New Roman" size="32.0" />
                   </font>

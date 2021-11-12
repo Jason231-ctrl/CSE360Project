@@ -35,13 +35,13 @@ public class Controller implements Initializable{
 	private Parent root;
 	
 	@FXML
-	private Label prescNameLabel;
-	
-	@FXML
 	private ChoiceBox<String> prescChoiceBox = new ChoiceBox<>();
 	
 	@FXML 
 	private ListView<String> prescListView = new ListView<>();
+
+	@FXML
+	private TextField prescDose;
 	
 	@FXML
 	private TextField username;
@@ -69,6 +69,7 @@ public class Controller implements Initializable{
 				String presFullName = namesresult.getString("First_name") + " " + namesresult.getString("Last_name");
 				presAllPatientNames.add(presFullName);
 			}
+			namesresult.close();
 
 			drugsresult = stmt.executeQuery("SELECT * FROM DrugDb");
 
@@ -77,6 +78,7 @@ public class Controller implements Initializable{
 				String presDrugName = drugsresult.getString("Name");
 				presDrugNames.add(presDrugName);
 			}
+			drugsresult.close();
 
 			prescChoiceBox.getItems().addAll(presAllPatientNames);
 			prescListView.getItems().addAll(presDrugNames);
@@ -92,6 +94,63 @@ public class Controller implements Initializable{
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	public void sendPrescription(ActionEvent event) throws IOException {
+		String selectedPatient = prescChoiceBox.getValue();
+		String selectedDrug = prescListView.getSelectionModel().getSelectedItem();
+		String currentDose = prescDose.getText();
+
+		if(selectedPatient == null || selectedDrug == null || currentDose == null || selectedPatient.compareTo("") == 0 || selectedDrug.compareTo("") == 0 || currentDose.compareTo("") == 0) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Missing Info");
+			alert.setHeaderText(null);
+			alert.setContentText("Make sure you included a patient, drug, and dosage.");
+
+			alert.showAndWait();
+		} else {
+			SQLiteDataSource ds = null;
+			ResultSet patientresult = null;
+			ResultSet drugresult = null;
+			ds = new SQLiteDataSource();
+			ds.setUrl("jdbc:sqlite:info.db");
+			try {
+				Connection conn = ds.getConnection();
+				Statement stmt = conn.createStatement();
+				patientresult = stmt.executeQuery("SELECT Perscriptions, Id FROM PatientInfoDb WHERE First_name = '" + selectedPatient.split(" ")[0] + "' AND Last_name = '" + selectedPatient.split(" ")[1] + "'");
+				int id = patientresult.getInt("Id");
+
+				String[] prescriptionsString = patientresult.getString("Perscriptions") == null ? new String[]{}:patientresult.getString("Perscriptions").split("|");
+				ArrayList<Prescription> prescriptions = new ArrayList<Prescription>();
+				for(String s : prescriptionsString) {
+					prescriptions.add(new Prescription(s));
+				}
+				patientresult.close();
+
+				drugresult = stmt.executeQuery("SELECT * FROM DrugDb WHERE Name = '" + selectedDrug + "'");
+				Prescription newPrescription = new Prescription(selectedDrug, drugresult.getString("Desc"), drugresult.getString("Type"), currentDose);
+
+				prescriptions.add(newPrescription);
+
+				ArrayList<String> prescriptionsStringified = new ArrayList<String>();
+				for(Prescription p : prescriptions) {
+					prescriptionsStringified.add(p.toString());
+				}
+				drugresult.close();
+
+				String newPrescriptionsString = String.join("|", prescriptionsStringified);
+
+				stmt.executeUpdate("UPDATE PatientInfoDb SET \"Perscriptions\" = '" + newPrescriptionsString + "' WHERE \"Id\" = " + id);
+			} catch (SQLException e) {
+				//e.printStackTrace();
+			}
+
+			root = FXMLLoader.load(getClass().getResource("Doctor Portal.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		}
 	}
 	
 	public void toResults(ActionEvent event) throws IOException {
