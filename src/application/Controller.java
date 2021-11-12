@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -25,8 +26,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.stream.Collectors;
 
 import org.sqlite.SQLiteDataSource;
+
+import javax.xml.transform.Result;
 
 public class Controller implements Initializable{
 	
@@ -39,6 +43,14 @@ public class Controller implements Initializable{
 	
 	@FXML 
 	private ListView<String> prescListView = new ListView<>();
+	@FXML
+	private ListView<String> patientPrescName = new ListView<>();
+	@FXML
+	private ListView<String> patientPrescType = new ListView<>();
+	@FXML
+	private ListView<String> patientPrescDesc = new ListView<>();
+	@FXML
+	private ListView<String> patientPrescDose = new ListView<>();
 
 	@FXML
 	private TextField prescDose;
@@ -55,34 +67,56 @@ public class Controller implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//Start Prescription
 		SQLiteDataSource ds = null;
-		ResultSet namesresult = null;
-		ResultSet drugsresult = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
-		try(Connection conn = ds.getConnection();
-			Statement stmt = conn.createStatement();) {
-			namesresult = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
+		if(Main.user.getType().compareTo("Doctor") == 0) {
+			try (Connection conn = ds.getConnection();
+				 Statement stmt = conn.createStatement();) {
+				ResultSet namesresult = null;
+				ResultSet drugsresult = null;
+				namesresult = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
 
-			ArrayList<String> presAllPatientNames = new ArrayList<String>();
-			while(namesresult.next()) {
-				String presFullName = namesresult.getString("First_name") + " " + namesresult.getString("Last_name");
-				presAllPatientNames.add(presFullName);
+				ArrayList<String> presAllPatientNames = new ArrayList<String>();
+				while (namesresult.next()) {
+					String presFullName = namesresult.getString("First_name") + " " + namesresult.getString("Last_name");
+					presAllPatientNames.add(presFullName);
+				}
+				namesresult.close();
+
+				drugsresult = stmt.executeQuery("SELECT * FROM DrugDb");
+
+				ArrayList<String> presDrugNames = new ArrayList<String>();
+				while (drugsresult.next()) {
+					String presDrugName = drugsresult.getString("Name");
+					presDrugNames.add(presDrugName);
+				}
+				drugsresult.close();
+
+				prescChoiceBox.getItems().addAll(presAllPatientNames);
+				prescListView.getItems().addAll(presDrugNames);
+			} catch (SQLException e) {
+				//e.printStackTrace();
 			}
-			namesresult.close();
+		} else if(Main.user.getType().compareTo("Patient") == 0){
+			try (Connection conn = ds.getConnection();
+				 Statement stmt = conn.createStatement();) {
+				ResultSet prescResult = null;
+				prescResult = stmt.executeQuery("SELECT Perscriptions FROM PatientInfoDb WHERE Id = " + Main.user.getId());
 
-			drugsresult = stmt.executeQuery("SELECT * FROM DrugDb");
+				ArrayList<Prescription> prescriptions = new ArrayList<Prescription>();
+				String[] prescString = prescResult.getString("Perscriptions") == null ? new String[]{}:prescResult.getString("Perscriptions").split("\\|");
+				for(String s : prescString) {
+					prescriptions.add(new Prescription(s));
+				}
+				prescResult.close();
 
-			ArrayList<String> presDrugNames = new ArrayList<String>();
-			while(drugsresult.next()) {
-				String presDrugName = drugsresult.getString("Name");
-				presDrugNames.add(presDrugName);
+				patientPrescName.getItems().addAll(prescriptions.stream().map(Prescription::getName).collect(Collectors.toList()));
+				patientPrescType.getItems().addAll(prescriptions.stream().map(Prescription::getType).collect(Collectors.toList()));
+				patientPrescDesc.getItems().addAll(prescriptions.stream().map(Prescription::getDescription).collect(Collectors.toList()));
+				patientPrescDose.getItems().addAll(prescriptions.stream().map(Prescription::getDose).collect(Collectors.toList()));
+			} catch (SQLException e) {
+				//
 			}
-			drugsresult.close();
-
-			prescChoiceBox.getItems().addAll(presAllPatientNames);
-			prescListView.getItems().addAll(presDrugNames);
-		} catch (SQLException e) {
-			//e.printStackTrace();
 		}
 		//End Prescription
 	}

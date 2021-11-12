@@ -65,7 +65,7 @@ public class User {
                 }
 
                 if(result.getString("Perscriptions") != null) {
-                    String[] prescriptionStringArr = result.getString("Perscriptions").split("|");
+                    String[] prescriptionStringArr = result.getString("Perscriptions").split("\\|");
                     if(result.getString("Perscriptions").split("|").length == 1) {
                         prescriptions.add(new Prescription(result.getString("Perscriptions")));
                     } else {
