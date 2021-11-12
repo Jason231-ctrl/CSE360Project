@@ -120,9 +120,9 @@ public class Controller implements Initializable{
 				patientresult = stmt.executeQuery("SELECT Perscriptions, Id FROM PatientInfoDb WHERE First_name = '" + selectedPatient.split(" ")[0] + "' AND Last_name = '" + selectedPatient.split(" ")[1] + "'");
 				id = patientresult.getInt("Id");
 
-				String[] prescriptionsString = patientresult.getString("Perscriptions") == null ? new String[]{}:patientresult.getString("Perscriptions").split("|");
+				String[] prescriptionsString = patientresult.getString("Perscriptions") == null ? new String[]{}:patientresult.getString("Perscriptions").split("\\|");
 				ArrayList<Prescription> prescriptions = new ArrayList<Prescription>();
-				for(String s : prescriptionsString) {
+				for (String s : prescriptionsString) {
 					prescriptions.add(new Prescription(s));
 				}
 				patientresult.close();
