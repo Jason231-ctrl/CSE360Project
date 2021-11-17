@@ -54,6 +54,9 @@ public class Controller implements Initializable{
 
 	@FXML
 	private TextField prescDose;
+
+	@FXML
+	private TextField PatientEditDOB, PatientEditAddress, PatientEditEmail, PatientEditPhoneNumber;
 	
 	@FXML
 	private TextField username;
@@ -65,10 +68,27 @@ public class Controller implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//Start Prescription
 		SQLiteDataSource ds = null;
 		ds = new SQLiteDataSource();
 		ds.setUrl("jdbc:sqlite:info.db");
+		//Start Edit Patient Info
+		if(Main.user.getType().compareTo("Patient") == 0) {
+			try (Connection conn = ds.getConnection();
+				 Statement stmt = conn.createStatement();) {
+				ResultSet patientInfo;
+
+				patientInfo = stmt.executeQuery("SELECT Dob, Address, Email_add, Phone_num FROM PatientInfoDb WHERE Id = " + Main.user.getId());
+
+				if(PatientEditAddress != null) PatientEditAddress.setText(patientInfo.getString("Address"));
+				if(PatientEditEmail != null) PatientEditEmail.setText(patientInfo.getString("Email_add"));
+				if(PatientEditPhoneNumber != null) PatientEditPhoneNumber.setText("" + patientInfo.getInt("Phone_num"));
+				if(PatientEditDOB != null) PatientEditDOB.setText(patientInfo.getString("Dob"));
+			} catch (SQLException e) {
+				//e.printStackTrace();
+			}
+		}
+		//End Edit Patient Info
+		//Start Prescription
 		if(Main.user.getType().compareTo("Doctor") == 0) {
 			try (Connection conn = ds.getConnection();
 				 Statement stmt = conn.createStatement();) {
@@ -284,6 +304,57 @@ public class Controller implements Initializable{
 	}
 
 	public void toPatientPortal(ActionEvent event) throws IOException {
+		root = FXMLLoader.load(getClass().getResource("Patient Portal.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public void savePatientEdits(ActionEvent event) throws IOException {
+		String Dob = PatientEditDOB.getText();
+		String Address = PatientEditAddress.getText();
+		String PhoneNumber = PatientEditPhoneNumber.getText();
+		String Email = PatientEditEmail.getText();
+		boolean validated = true;
+
+		if(!Pattern.compile("(?:0[1-9]|1[0-2]|[1-9])\\/(?:[1-9]|[12][0-9]|0[1-9]|3[01])\\/[0-9]{4}").matcher(Dob).find()) {
+			validated = false;
+		} else if(!Pattern.compile("\\d{1,5}(\\s[\\w-.,]*){1,6}").matcher(Address).find()) {
+			validated = false;
+		} else if(!Pattern.compile("\\d{10}").matcher(PhoneNumber).find()) {
+			validated = false;
+		} else if(!Pattern.compile("(?:^|\\s)[\\w!#$%&'*+/=?^`{|}~-](\\.?[\\w!#$%&'*+/=?^`{|}~-]+)*@\\w+[.-]?\\w*\\.[a-zA-Z]{2,3}\\b").matcher(Email).find()) {
+			validated = false;
+		}
+
+		if(!validated) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Invalid Information Entered");
+			alert.setHeaderText(null);
+			alert.setContentText("Please make sure all of your information is in the correct format");
+
+			alert.showAndWait();
+			return;
+		}
+
+		SQLiteDataSource ds = null;
+		ResultSet result;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+
+		try ( Connection conn = ds.getConnection();
+			  Statement stmt = conn.createStatement(); ) {
+			stmt.executeUpdate("" +
+					"UPDATE PatientInfoDb " +
+					"SET Dob = '" + Dob + "', Email_add = '" + Email + "', Address = '" + Address + "', Phone_num = '" + PhoneNumber + "' " +
+					"WHERE Id = " + Main.user.getId() + ";"
+			);
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		root = FXMLLoader.load(getClass().getResource("Patient Portal.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
