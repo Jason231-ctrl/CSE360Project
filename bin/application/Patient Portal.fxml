@@ -25,7 +25,7 @@
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
-                        <Image url="@../DNA%20Strand.jpg" />
+                        <Image url="@../DNA Strand.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -33,7 +33,7 @@
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
-                        <Image url="@../prescriptions.jpg" />
+                        <Image url="@../prescriptions.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -41,7 +41,7 @@
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
-                        <Image url="@../doctorNurse.jpg" />
+                        <Image url="@../doctorNurse.png" />
                      </image>
                   </ImageView>
                </graphic>
