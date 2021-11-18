@@ -40,6 +40,9 @@ public class Controller implements Initializable{
 	
 	@FXML
 	private ChoiceBox<String> prescChoiceBox = new ChoiceBox<>();
+
+	@FXML
+	private ChoiceBox<String> DVitalsPatient = new ChoiceBox<>();
 	
 	@FXML 
 	private ListView<String> prescListView = new ListView<>();
@@ -63,6 +66,8 @@ public class Controller implements Initializable{
 
 	@FXML
 	private Label PatientOxygen, PatientBP, PatientHeight, PatientWeight, PatientTemp, PatientPulse;
+	@FXML
+	private Label DPatientOxygen, DPatientBP, DPatientHeight, DPatientWeight, DPatientTemp, DPatientPulse;
 	
 	@FXML
 	private TextField username;
@@ -114,6 +119,26 @@ public class Controller implements Initializable{
 			}
 		}
 		//End Patient Check Results
+		//Start Doctor Check Results
+		if(Main.user.getType().compareTo("Doctor") == 0) {
+			try (Connection conn = ds.getConnection();
+				 Statement stmt = conn.createStatement();) {
+				ResultSet namesresult = null;
+				namesresult = stmt.executeQuery("SELECT First_name,Last_name FROM PatientInfoDb WHERE DoctorID = " + Main.user.getId());
+
+				ArrayList<String> AllPatientNames = new ArrayList<String>();
+				while (namesresult.next()) {
+					String presFullName = namesresult.getString("First_name") + " " + namesresult.getString("Last_name");
+					AllPatientNames.add(presFullName);
+				}
+				namesresult.close();
+
+				DVitalsPatient.getItems().addAll(AllPatientNames);
+			} catch (SQLException e) {
+				//e.printStackTrace();
+			}
+		}
+		//End Doctor Check Results
 		//Start Prescription
 		if(Main.user.getType().compareTo("Doctor") == 0) {
 			try (Connection conn = ds.getConnection();
@@ -165,6 +190,29 @@ public class Controller implements Initializable{
 			}
 		}
 		//End Prescription
+	}
+
+	public void changeCurrentPatientVitals(ActionEvent event) {
+		SQLiteDataSource ds = null;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+
+		try (Connection conn = ds.getConnection();
+			 Statement stmt = conn.createStatement();) {
+			String[] name = DVitalsPatient.getValue().split(" ");
+			ResultSet patient = stmt.executeQuery("SELECT * FROM ResultDb WHERE Id = (SELECT Id FROM PatientInfoDb WHERE First_name = '" + name[0] + "' AND Last_name = '" + name[1] + "')");
+
+			if(patient.next()) {
+				if (DPatientBP != null) DPatientBP.setText(patient.getString("BP"));
+				if (DPatientPulse != null) DPatientPulse.setText(patient.getInt("Pulse") + " BPM");
+				if (DPatientTemp != null) DPatientTemp.setText(patient.getInt("Temp") + " F");
+				if (DPatientHeight != null) DPatientHeight.setText(patient.getInt("HEIGHT") + " cm");
+				if (DPatientWeight != null) DPatientWeight.setText(patient.getInt("WEIGHT") + " lbs");
+				if (DPatientOxygen != null) DPatientOxygen.setText(patient.getInt("O2") + "%");
+			}
+		} catch (SQLException e) {
+			//e.printStackTrace();
+		}
 	}
 
 	public void toEditUser(ActionEvent event) throws IOException {
