@@ -28,11 +28,6 @@
                   <Font size="10.0" />
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="426.0" layoutY="321.0" text="Forgot Password" underline="true">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
          </children>
       </AnchorPane>
    </children>

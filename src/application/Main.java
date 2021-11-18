@@ -61,7 +61,7 @@ public class Main extends Application {
                 "Username TEXT NOT NULL, " +
                 "Password TEXT NOT NULL, " +
                 "Dob TEXT NOT NULL, " +   // dob is ##/##/#### number can be parsed out
-                "DoctorID Integer, " +  // pick the doctor 
+                "DoctorID TEXT NOT NULL, " +  // pick the doctor 
                 "Nurse TEXT, " +   // assigned after picking doctor, can be NULL
                 "Address TEXT NOT NULL, " +
                 "Email_add TEXT NOT NULL, " +
@@ -89,7 +89,8 @@ public class Main extends Application {
                 //so its going to be a large test separated by , and parse out info
                 "Patients TEXT NOT NULL, " +
                 "Dob TEXT NOT NULL, " + 
-                "Id INTEGER NOT NULL PRIMARY KEY )";
+                "Id INTEGER NOT NULL PRIMARY KEY, " +
+                "Doctor INTEGER NOT NULL)";
         
         String createResult = "CREATE TABLE IF NOT EXISTS ResultDb ( " +
         		//data base that as the results of vital test per patient.

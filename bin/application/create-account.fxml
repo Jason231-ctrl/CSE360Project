@@ -21,20 +21,36 @@
             </Label>
         </top>
         <center>
-            <HBox BorderPane.alignment="CENTER" spacing="20" style="-fx-padding: 30 40 0 40">
+        <VBox alignment = "CENTER">
+            <HBox BorderPane.alignment="CENTER" spacing="20" style="-fx-padding: 30 40 15 40">
                 <VBox spacing="10">
                     <TextField fx:id="Username" prefWidth="190" promptText="Username"/>
                     <TextField fx:id="Password" prefWidth="190" promptText="Password"/>
+                    <TextField fx:id="Address" prefWidth="190" promptText="Address"/>
+                    <TextField fx:id="EmailAddress" prefWidth="190" promptText="Email Address"/>
+                    
                 </VBox>
                 <VBox spacing="10">
                     <TextField fx:id="FirstName" prefWidth="190" promptText="First Name" />
                     <TextField fx:id="LastName" prefWidth="190" promptText="Last Name" />
                     <TextField fx:id="DoB" prefWidth="190" promptText="Date of Birth(mm/dd/yyyy)" />
+                    <TextField fx:id="PhoneNumber" prefWidth="190" promptText="Phone Number" />
+                    
                 </VBox>
             </HBox>
+            	<HBox alignment="CENTER" spacing="15">
+            		<Label BorderPane.alignment="CENTER" text="Select a doctor">
+                		<font>
+                    	<Font name="System" />
+                		</font>
+            			</Label>
+            		<ChoiceBox fx:id="DoctorSelection">
+            		</ChoiceBox>
+            	</HBox>
+            </VBox>
         </center>
         <bottom>
-            <HBox BorderPane.alignment="CENTER" spacing="70" style="-fx-padding: 0 65 30 65">
+            <HBox BorderPane.alignment="CENTER" spacing="70" style="-fx-padding: 15 65 30 65">
                 <Button prefWidth="140" text="Cancel" onAction="#cancelCreation" onMouseEntered="#hover" onMouseExited="#unHover" style="
                     -fx-background-color: #78c4ff;
                     -fx-text-fill: white;
