@@ -43,11 +43,11 @@ public class CheckMessages {
     	Connection con = ds.getConnection();
     	String user = Main.user.getFirstName() + " " + Main.user.getLastName();
     	System.out.println(user);
-    	String sql = "SELECT Receiver, Messages from MessagesDB where Sender = '" + user + "'";
+    	String sql = "SELECT Sender, Messages from MessagesDB where Receiver = '" + user + "'";
     	ps = con.prepareStatement(sql);
     	rs = ps.executeQuery();
     	while(rs.next()) {
-    		String sender = rs.getString("Receiver");
+    		String sender = rs.getString("Sender");
     		String message = rs.getString("Messages");
     		Table.getItems().add(new Conversation(sender, message));
     	}
