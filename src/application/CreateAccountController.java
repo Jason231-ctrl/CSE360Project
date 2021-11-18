@@ -81,14 +81,15 @@ public class CreateAccountController implements Initializable{
 			 	doctorIdInt = doctorFind.getInt("Id");
 			 	String patientDoctorList =  doctorFind.getString("Patients");
 			 	ResultSet nursePatients = stmt.executeQuery("SELECT Patients,Id FROM NurseInfoDb WHERE Doctor = " + doctorIdInt);
-			 	String patientNurseList = nursePatients.getString("Patients");
+			 	String patientNurseList;
 			 	// this do-while loop will find the nurses that are working with the doctors
 			 	// and assign the nurse with the lowest amount of patients to the new patient.
 			 	do {
-			 		int temp = patientNurseList.split(",").length;
+			 		int temp = nursePatients.getString("Patients").split(",").length;
 			 		if(temp < patientNumber) {
 			 			smallestNurse = nursePatients.getInt("Id");
 			 			patientNumber = temp;
+			 			patientNurseList = nursePatients.getString("Patients");
 			 		}
 			 	} while (nursePatients.next());
 			 	// if the table is empty then first id starts at 1000.
@@ -115,6 +116,8 @@ public class CreateAccountController implements Initializable{
 			 		
 			 	stmt.executeUpdate(createAccountPatientQuery);
 			 	stmt.executeUpdate(createAccountQuery);
+			 	stmt.executeUpdate(createAccountNurseQuery);
+			 	stmt.executeUpdate(createAccountDoctorQuery);
 		 } catch ( SQLException e) {
 			 e.printStackTrace();
 		 }
