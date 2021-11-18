@@ -57,6 +57,12 @@ public class Controller implements Initializable{
 
 	@FXML
 	private TextField PatientEditDOB, PatientEditAddress, PatientEditEmail, PatientEditPhoneNumber;
+
+	@FXML
+	private TextField VitalsFirstName, VitalsLastName, VitalsTemperature, VitalsPulse, VitalsBloodPressure, VitalsWeight, VitalsHeight, VitalsOxygen;
+
+	@FXML
+	private Label PatientOxygen, PatientBP, PatientHeight, PatientWeight, PatientTemp, PatientPulse;
 	
 	@FXML
 	private TextField username;
@@ -88,6 +94,26 @@ public class Controller implements Initializable{
 			}
 		}
 		//End Edit Patient Info
+		//Start Patient Check Results
+		if(Main.user.getType().compareTo("Patient") == 0) {
+			try (Connection conn = ds.getConnection();
+				 Statement stmt = conn.createStatement();) {
+				ResultSet patientInfo;
+
+				patientInfo = stmt.executeQuery("SELECT * FROM ResultDb WHERE Id = " + Main.user.getId());
+				if(patientInfo.next()) {
+					if (PatientBP != null) PatientBP.setText(patientInfo.getString("BP"));
+					if (PatientPulse != null) PatientPulse.setText(patientInfo.getInt("Pulse") + " BPM");
+					if (PatientTemp != null) PatientTemp.setText(patientInfo.getInt("Temp") + " F");
+					if (PatientHeight != null) PatientHeight.setText(patientInfo.getInt("HEIGHT") + " cm");
+					if (PatientWeight != null) PatientWeight.setText(patientInfo.getInt("WEIGHT") + " lbs");
+					if (PatientOxygen != null) PatientOxygen.setText(patientInfo.getInt("O2") + "%");
+				}
+			} catch (SQLException e) {
+				//e.printStackTrace();
+			}
+		}
+		//End Patient Check Results
 		//Start Prescription
 		if(Main.user.getType().compareTo("Doctor") == 0) {
 			try (Connection conn = ds.getConnection();
@@ -143,6 +169,45 @@ public class Controller implements Initializable{
 
 	public void toEditUser(ActionEvent event) throws IOException {
 		root = FXMLLoader.load(getClass().getResource("EditUser.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public void updateVitals(ActionEvent event) throws IOException {
+		String FirstName = VitalsFirstName.getText();
+		String LastName = VitalsLastName.getText();
+		String Temperature = VitalsTemperature.getText();
+		String BloodPressure = VitalsBloodPressure.getText();
+		String Height = VitalsHeight.getText();
+		String Weight = VitalsWeight.getText();
+		String Oxygen = VitalsOxygen.getText();
+		String Pulse = VitalsPulse.getText();
+
+		SQLiteDataSource ds = null;
+		ResultSet result;
+		ds = new SQLiteDataSource();
+		ds.setUrl("jdbc:sqlite:info.db");
+
+		try ( Connection conn = ds.getConnection();
+			  Statement stmt = conn.createStatement(); ) {
+			stmt.execute("" +
+					"INSERT OR REPLACE INTO ResultDb (Id, Temp, Pulse, BP, HEIGHT, WEIGHT, O2) VALUES (" +
+					"(SELECT Id FROM PatientInfoDb WHERE First_name = '" + FirstName + "' AND Last_name = '" + LastName + "')," +
+					Temperature + "," +
+					Pulse + ",'" +
+					BloodPressure + "'," +
+					Height + "," +
+					Weight + "," +
+					Oxygen + ");"
+			);
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		root = FXMLLoader.load(getClass().getResource("Nurse Portal.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
