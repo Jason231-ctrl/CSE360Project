@@ -10,7 +10,7 @@
    <children>
       <AnchorPane prefHeight="720.0" prefWidth="992.0">
          <children>
-            <Button fx:id="results" layoutX="211.0" layoutY="126.0" mnemonicParsing="false" onAction="#toCheckVitals" prefHeight="25.0" prefWidth="60.0">
+            <Button fx:id="results" layoutX="222.0" layoutY="126.0" mnemonicParsing="false" onAction="#toCheckVitals" prefHeight="25.0" prefWidth="60.0">
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
@@ -58,7 +58,7 @@
                   <Image url="@../toplogo.png" />
                </image>
             </ImageView>
-            <Label layoutX="266.0" layoutY="334.0" text="Check Vitals">
+            <Label layoutX="277.0" layoutY="334.0" text="Check Vitals">
                <font>
                   <Font size="20.0" />
                </font>
