@@ -81,26 +81,15 @@ public class CreateAccountController implements Initializable{
 			 	doctorIdInt = doctorFind.getInt("Id");
 			 	String patientDoctorList =  doctorFind.getString("Patients");
 			 	ResultSet nursePatients = stmt.executeQuery("SELECT Patients,Id FROM NurseInfoDb WHERE Doctor = " + doctorIdInt);
-<<<<<<< Updated upstream
-			 	String patientNurseList;
-=======
 			 	String patientNurseList = null;
->>>>>>> Stashed changes
 			 	// this do-while loop will find the nurses that are working with the doctors
 			 	// and assign the nurse with the lowest amount of patients to the new patient.
 			 	do {
 			 		int temp = nursePatients.getString("Patients").split(",").length;
-<<<<<<< Updated upstream
-			 		if(temp < patientNumber) {
-			 			smallestNurse = nursePatients.getInt("Id");
-			 			patientNumber = temp;
-			 			patientNurseList = nursePatients.getString("Patients");
-=======
 			 		if(temp <= patientNumber) {
 			 			smallestNurse = nursePatients.getInt("Id");
 			 			patientNumber = temp;
 						patientNurseList = nursePatients.getString("Patients");
->>>>>>> Stashed changes
 			 		}
 			 	} while (nursePatients.next());
 			 	// if the table is empty then first id starts at 1000.
@@ -127,13 +116,8 @@ public class CreateAccountController implements Initializable{
 			 		
 			 	stmt.executeUpdate(createAccountPatientQuery);
 			 	stmt.executeUpdate(createAccountQuery);
-<<<<<<< Updated upstream
-			 	stmt.executeUpdate(createAccountNurseQuery);
-			 	stmt.executeUpdate(createAccountDoctorQuery);
-=======
 			 	stmt.executeUpdate(createAccountDoctorQuery);
 			 	stmt.executeUpdate(createAccountNurseQuery);
->>>>>>> Stashed changes
 		 } catch ( SQLException e) {
 			 e.printStackTrace();
 		 }
