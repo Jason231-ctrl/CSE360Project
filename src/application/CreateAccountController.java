@@ -61,6 +61,9 @@ public class CreateAccountController implements Initializable{
 
     @FXML
     protected void createAccount() throws IOException {
+    	String createAccountPatientQuery;
+    	String createAccountDoctorQuery;
+    	String createAccountNurseQuery;
     	String createAccountQuery;
     	SQLiteDataSource ds = null;
 		ds = new SQLiteDataSource();
@@ -74,13 +77,15 @@ public class CreateAccountController implements Initializable{
 			 	ResultSet count = stmt.executeQuery("SELECT COUNT(Id) FROM PatientInfoDb");
 			 	counted = count.getInt("Count(Id)");
 			 	String[] name = DoctorSelection.getValue().split(" ");
-			 	ResultSet doctorFind = stmt.executeQuery("SELECT Id FROM DoctorInfoDb WHERE First_name = '" + name[0] + "' AND Last_name = '" + name[1] + "'");
+			 	ResultSet doctorFind = stmt.executeQuery("SELECT Id,Patients FROM DoctorInfoDb WHERE First_name = '" + name[0] + "' AND Last_name = '" + name[1] + "'");
 			 	doctorIdInt = doctorFind.getInt("Id");
+			 	String patientDoctorList =  doctorFind.getString("Patients");
 			 	ResultSet nursePatients = stmt.executeQuery("SELECT Patients,Id FROM NurseInfoDb WHERE Doctor = " + doctorIdInt);
+			 	String patientNurseList = nursePatients.getString("Patients");
 			 	// this do-while loop will find the nurses that are working with the doctors
 			 	// and assign the nurse with the lowest amount of patients to the new patient.
 			 	do {
-			 		int temp = nursePatients.getString("Patients").split(",").length;
+			 		int temp = patientNurseList.split(",").length;
 			 		if(temp < patientNumber) {
 			 			smallestNurse = nursePatients.getInt("Id");
 			 			patientNumber = temp;
@@ -88,7 +93,7 @@ public class CreateAccountController implements Initializable{
 			 	} while (nursePatients.next());
 			 	// if the table is empty then first id starts at 1000.
 			 	// creates a new patient.
-			 		createAccountQuery = "INSERT INTO PatientInfoDb (First_name,Last_name,Username,Password,Dob,DoctorID,Nurse,Address,Email_add,Phone_num,Id) VALUES('" + 
+			 		createAccountPatientQuery = "INSERT INTO PatientInfoDb (First_name,Last_name,Username,Password,Dob,DoctorID,Nurse,Address,Email_add,Phone_num,Id) VALUES('" + 
 			 			FirstName.getText() + "','" + 
 			 			LastName.getText() + "','" + 
 			 			Username.getText() + "','" + 
@@ -101,6 +106,14 @@ public class CreateAccountController implements Initializable{
 			 			PhoneNumber.getText() + "," + 
 			 			(1000+counted) + 
 			 			")";
+			 		createAccountQuery = "INSERT INTO AccountDb (Username,Password,Type) VALUES('" + 
+				 			Username.getText() + "','" + 
+				 			Password.getText() + "'," + 
+				 			"0)";
+			 		createAccountDoctorQuery = "UPDATE DoctorInfoDb SET Patients = '" + (patientDoctorList + "," + (1000 + counted)) + "' WHERE Id = '" + doctorIdInt + "'";
+			 		createAccountNurseQuery = "UPDATE NurseInfoDb SET Patients = '" + (patientNurseList + "," + (1000 + counted)) + "' WHERE Id = '" + smallestNurse + "'";
+			 		
+			 	stmt.executeUpdate(createAccountPatientQuery);
 			 	stmt.executeUpdate(createAccountQuery);
 		 } catch ( SQLException e) {
 			 e.printStackTrace();
