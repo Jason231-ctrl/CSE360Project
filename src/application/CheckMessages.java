@@ -4,10 +4,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,24 +21,29 @@ import java.sql.ResultSet;
 import org.sqlite.SQLiteDataSource;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class CheckMessages {
     @FXML
     private TableView<Conversation> Table;
+    
 
     public void initialize() {
-    	initializeTable();
+    	initializeMessageTable();
     }
     
-    private void initializeTable() {
+    
+    private void initializeMessageTable() {
     	SQLiteDataSource ds = new SQLiteDataSource();
     	ds.setUrl("jdbc:sqlite:info.db");
     	ResultSet rs = null;
     	PreparedStatement ps = null;
     	try {
     	Connection con = ds.getConnection();
-    	String sql = "SELECT Receiver, Messages from MessagesDB where Sender = 'User'";
+    	String user = Main.user.getFirstName() + " " + Main.user.getLastName();
+    	System.out.println(user);
+    	String sql = "SELECT Receiver, Messages from MessagesDB where Sender = '" + user + "'";
     	ps = con.prepareStatement(sql);
     	rs = ps.executeQuery();
     	while(rs.next()) {
@@ -58,7 +67,16 @@ public class CheckMessages {
 
     @FXML
     private void back() throws IOException {
-        Scene newScene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Patient Portal.fxml"))));
+    	Scene newScene;
+    	if (Main.user.getType() == "Patient") {
+    		newScene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Patient Portal.fxml"))));
+    	} else if (Main.user.getType() == "Doctor") {
+    		newScene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Doctor Portal.fxml"))));
+    	} else if (Main.user.getType() == "Nurse") {
+    		newScene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Nurse Portal.fxml"))));
+    	} else {
+    		newScene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Main.fxml"))));
+    	}
         Stage window = (Stage) Table.getScene().getWindow();
         window.setScene(newScene);
     }
