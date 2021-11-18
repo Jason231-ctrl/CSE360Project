@@ -10,7 +10,7 @@
    <children>
       <AnchorPane prefHeight="720.0" prefWidth="992.0">
          <children>
-            <Button fx:id="results" layoutX="59.0" layoutY="141.0" mnemonicParsing="false" onAction="#toCheckVitals" prefHeight="25.0" prefWidth="60.0">
+            <Button fx:id="results" layoutX="211.0" layoutY="126.0" mnemonicParsing="false" onAction="#toCheckVitals" prefHeight="25.0" prefWidth="60.0">
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
@@ -18,7 +18,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="prescriptions" layoutX="376.0" layoutY="141.0" mnemonicParsing="false" onAction="#toSendPrescriptions" prefHeight="25.0" prefWidth="60.0">
+            <Button fx:id="prescriptions" layoutX="530.0" layoutY="126.0" mnemonicParsing="false" onAction="#toSendPrescriptions" prefHeight="25.0" prefWidth="60.0">
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
@@ -26,7 +26,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Button fx:id="message" layoutX="695.0" layoutY="141.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
+            <Button fx:id="message" layoutX="221.0" layoutY="401.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
                <graphic>
                   <ImageView fitHeight="200.0" fitWidth="200.0">
                      <image>
@@ -58,36 +58,22 @@
                   <Image url="@../toplogo.png" />
                </image>
             </ImageView>
-            <Label layoutX="114.0" layoutY="349.0" text="Check Vitals">
+            <Label layoutX="266.0" layoutY="334.0" text="Check Vitals">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="403.0" layoutY="349.0" text="Send Prescriptions">
+            <Label layoutX="557.0" layoutY="334.0" text="Send Prescriptions">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="731.0" layoutY="349.0" text="Message Patient">
+            <Label layoutX="257.0" layoutY="609.0" text="Message Patient">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
             <Label layoutX="600.0" layoutY="609.0" text="Sign Out">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Button fx:id="message1" layoutX="211.0" layoutY="401.0" mnemonicParsing="false" onAction="#toMessages" prefHeight="25.0" prefWidth="60.0">
-               <graphic>
-                  <ImageView fitHeight="200.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@../mail.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Label layoutX="291.0" layoutY="609.0" text="Emails">
                <font>
                   <Font size="20.0" />
                </font>

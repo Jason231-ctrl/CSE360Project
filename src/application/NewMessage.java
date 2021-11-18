@@ -113,7 +113,7 @@ public class NewMessage {
 			Stage stage = (Stage) sendMessageButton.getScene().getWindow();
 			stage.close();
 		} else {
-			insertMessage(Main.user.getFirstName() + " " + Main.user.getLastName(), toText, message);
+			insertMessage(Main.user.getFirstName() + " " + Main.user.getLastName(), toText.replaceAll("(\\(Doctor\\)|\\(Nurse\\))", ""), message);
 			Stage stage = (Stage) sendMessageButton.getScene().getWindow();
 			stage.close();
 		}
